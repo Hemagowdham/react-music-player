@@ -1,38 +1,107 @@
 .App {
   text-align: center;
+  background: linear-gradient(to bottom right, #7A7C91,  #B0B1C5, #7A7C91);
+  color: #FFFFFE;
+  margin-top: 10vh;
+  height: 80vh;
+  padding: 0 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.music-container {
+  height: 80vh;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.playlist-button {
+  position: relative;
+  top: 3vh;
+  left: 41vw;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.music-poster {
+  position: fixed;
+  top: 5vh;
+  right: 40vw;
 }
 
-.App-link {
-  color: #61dafb;
+.music-details {
+  text-indent: 20vw;
+  text-align: start;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.music-title {
+  color: #EBEDF3;
+  font-family: "Kanit", sans-serif; 
+  font-weight: 300; 
+  font-style: normal; 
+  font-size: 32px;
+
+}
+
+.music-artist {
+  color: #7A7C91;
+  font-family: "Kanit", sans-serif; 
+  font-weight: 400; 
+  font-style: normal; 
+  font-size: 16px;
+}
+
+.music-composer {
+  color: #EBEDF3;
+  font-family: "Kanit", sans-serif; 
+  font-weight: 500; 
+  font-style: normal; 
+  font-size: 16px;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #9ECDC1;
+  cursor: pointer;
+  height: 4px;
+  width: 48vw;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background: #9ECDC1;
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-appearance {
+  appearance: none;
+  background: black;
+  border: 2px solid #000000;
+}
+
+.music-timer {
+  font-family: "Kanit", sans-serif; 
+  font-weight: 400; 
+  font-style: normal;
+  font-size: 14px;
+  width: 48vw;
+  margin: 0 19vw;
+}
+
+.music-controller-icons {
+  width: 32vw;
+  margin-left: 32vw;
+}
+
+.volume-adjust-bar[type=range] {
+  width: 8vw; 
+  height: 4px;
+  background: #EBEDF3;
+}
+
+.volume-adjust-bar[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background: #EBEDF3;
+  cursor: pointer;
 }

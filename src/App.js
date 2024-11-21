@@ -1,23 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import MusicApp from './Components/MusicApp';
+
 
 function App() {
+
+  const songsList = [
+    {songName: "Katchi sera", songAlbum: "Think Indie",songArtist: "Sai Abhyankkar", songComposer:"Sai Abhyankkar", songSource: "/songs/Katchi Sera.mp3", songDuration: "3:01", songPoster: "/images/images.jpeg"},
+    {songName: "Anbil Avan", songAlbum: "Vinnaithandi Varuvaya", songArtist: "Vijay Prakash, Suzanne D'mello, Blaaze", songComposer: "A.R. Rahman", songSource: "/songs/Anbil-Avan.mp3", songDuration: "3:01", songPoster: "/images/hosonnaposter.jpg"}
+  ];
+  const song = songsList[1];
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App container mx-auto">
+      <MusicApp song={song} />
     </div>
   );
 }
