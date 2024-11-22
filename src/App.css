@@ -2,30 +2,35 @@
   text-align: center;
   background: linear-gradient(to bottom right, #7A7C91,  #B0B1C5, #7A7C91);
   color: #FFFFFE;
-  margin-top: 10vh;
-  height: 80vh;
-  padding: 0 0;
+  width: auto;
+  height: auto;
+  margin: 72px 72px;
 }
 
 .music-container {
-  height: 80vh;
+  height: auto;
+  width: auto;
+  position: relative;
 }
 
 .playlist-button {
-  position: relative;
-  top: 3vh;
-  left: 41vw;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 16px 16px;
 }
 
 .music-poster {
-  position: fixed;
-  top: 5vh;
-  right: 40vw;
+  position: absolute;
+  top: -40px;
+  left: 0;
+  right: 0;
+  margin-inline: auto;
 }
 
 .music-details {
-  text-indent: 20vw;
   text-align: start;
+  margin: 0 20vw;
 }
 
 .music-title {
@@ -33,8 +38,7 @@
   font-family: "Kanit", sans-serif; 
   font-weight: 300; 
   font-style: normal; 
-  font-size: 32px;
-
+  font-size: 36px;
 }
 
 .music-artist {
@@ -42,7 +46,7 @@
   font-family: "Kanit", sans-serif; 
   font-weight: 400; 
   font-style: normal; 
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .music-composer {
@@ -50,31 +54,40 @@
   font-family: "Kanit", sans-serif; 
   font-weight: 500; 
   font-style: normal; 
-  font-size: 16px;
+  font-size: 1rem;
 }
 
-input[type="range"] {
+.music-progress {
+  margin: 0 20vw;
+}
+
+.music-progress-bar {
   -webkit-appearance: none;
   appearance: none;
-  background: #9ECDC1;
   cursor: pointer;
+  background: #9ECDC1;
   height: 4px;
   width: 48vw;
 }
 
-input[type=range]::-webkit-slider-thumb {
+.music-progress-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background: #9ECDC1;
   height: 16px;
   width: 16px;
   border-radius: 8px;
-  background: #9ECDC1;
-  cursor: pointer;
 }
 
-input[type=range]::-moz-range-appearance {
+.music-progress-bar::-moz-range-thumb {
+  -webkit-appearance: none;
   appearance: none;
-  background: black;
-  border: 2px solid #000000;
+  cursor: pointer;
+  background: #9ECDC1;
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
 }
 
 .music-timer {
@@ -82,26 +95,42 @@ input[type=range]::-moz-range-appearance {
   font-weight: 400; 
   font-style: normal;
   font-size: 14px;
-  width: 48vw;
-  margin: 0 19vw;
+  width: auto;
 }
 
-.music-controller-icons {
-  width: 32vw;
-  margin-left: 32vw;
+.music-controls{
+  position: relative;
 }
 
-.volume-adjust-bar[type=range] {
+.music-controller {
+  margin: 0 20vw;
+}
+
+.volume-controller {
+  position: absolute;
+  top: 20px;
+  right: 20vw;
+}
+
+.volume-adjust-bar {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background: #EBEDF3;
   width: 8vw; 
   height: 4px;
-  background: #EBEDF3;
 }
 
-.volume-adjust-bar[type=range]::-webkit-slider-thumb {
+.volume-adjust-bar::-webkit-slider-thumb {
   -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  background: #EBEDF3;
   height: 16px;
   width: 16px;
   border-radius: 8px;
-  background: #EBEDF3;
-  cursor: pointer;
 }
+
+/*Media Query*/
+
+@m

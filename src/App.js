@@ -11,7 +11,7 @@ function App() {
   const song = songsList[1];
   
   return (
-    <div className="App container mx-auto">
+    <div className="App">
       <MusicApp song={song} />
     </div>
   );
