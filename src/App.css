@@ -65,9 +65,10 @@
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
-  background: #9ECDC1;
+  background: #7A7C91;
   height: 4px;
   width: 48vw;
+  border-radius: 3px;
 }
 
 .music-progress-bar::-webkit-slider-thumb {
@@ -77,7 +78,7 @@
   background: #9ECDC1;
   height: 16px;
   width: 16px;
-  border-radius: 8px;
+  border-radius: 50%;
 }
 
 .music-progress-bar::-moz-range-thumb {
@@ -87,7 +88,7 @@
   background: #9ECDC1;
   height: 16px;
   width: 16px;
-  border-radius: 8px;
+  border-radius: 50%;
 }
 
 .music-timer {

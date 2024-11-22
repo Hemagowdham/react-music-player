@@ -5,10 +5,21 @@ export default function MusicApp({song}) {
     const currentAudio = useRef();
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
     const [audioProgress, setAudioProgress] = useState(0);
+    const [audioProgressDuration, setAudioProgressDuration] = useState("0:00");
     const [volume, setVolume] = useState(50);
 
     const handleClick = () => {
         alert("hi");
+    }
+
+    const handleMusicProgressBar = (event) => {
+        setAudioProgress(event.target.value);
+        currentAudio.current.currentTime = (event.target.value * currentAudio.current.duration) / 100;
+        let currentMinutes = Math.floor(currentAudio.current.currentTime/60);
+        let currentSeconds = Math.floor(currentAudio.current.currentTime%60);
+        if (currentSeconds < 10) {currentSeconds="0"+currentSeconds;}
+        let currentProgressTime = currentMinutes+":"+currentSeconds;
+        setAudioProgressDuration(currentProgressTime);
     }
 
     const handleAudioPlay = () => {
@@ -40,9 +51,9 @@ export default function MusicApp({song}) {
             </div>
 
             <div className="music-progress mb-2">
-                <input type="range" className="music-progress-bar" value={audioProgress} onChange={(event)=>{setAudioProgress(event.target.value)}}/>
+                <input type="range" className="music-progress-bar" value={audioProgress} onChange={handleMusicProgressBar} style={{"background" : `linear-gradient(to right, #9ECDC1 ${audioProgress}%, #7A7C91 ${audioProgress}%)`}}/>
                 <div className="music-timer d-flex justify-content-between">
-                    <div className="music-current-time">{audioProgress}</div>
+                    <div className="music-current-time">{audioProgressDuration}</div>
                     <div className="music-total-time">{song.songDuration}</div>
                 </div>
             </div>
