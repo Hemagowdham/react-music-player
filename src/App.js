@@ -4,7 +4,7 @@ import MusicApp from './Components/MusicApp';
 
 function App() {
 
-  const songsList = [
+  const songList = [
     { id: 1,
       songName: "Katchi sera", 
       songAlbum: "Think Indie",
@@ -77,11 +77,11 @@ function App() {
       songSource: "/songs/Apna Bana le.mp3", 
       songDuration: "3:12"},
   ];
-  const song = songsList[0];
+  const song = songList[0];
   
   return (
-    <div className="App">
-      <MusicApp song={song} />
+    <div className="App" id="main">
+      <MusicApp song={song} songList={songList}/>
     </div>
   );
 }

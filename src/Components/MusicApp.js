@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import MusicCard from './MusicCard';
 
-export default function MusicApp({song}) {
+export default function MusicApp({song, songList}) {
 
     const currentAudio = useRef();
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -14,6 +15,11 @@ export default function MusicApp({song}) {
         alert("hi");
     }
 
+    //Playlist Display Event Handler
+    const displayPlaylist = () => {
+        
+    };
+
     //Time convertion seconds to Miute:Seconds Format
     const secondsToMinute = (time) => {
         let timeMinutes = Math.floor(time/60);
@@ -22,7 +28,7 @@ export default function MusicApp({song}) {
             timeSeconds = "0" + timeSeconds;
         }
         return(timeMinutes+":"+timeSeconds);
-    }
+    };
 
     //Audio time update Event Handler
     const handleAudioTimeUpdate = () => {
@@ -36,7 +42,7 @@ export default function MusicApp({song}) {
         let audioProgress = Math.floor((currentAudio.current.currentTime/currentAudio.current.duration) * 100);
         
         setAudioProgress(isNaN(audioProgress)? 0: audioProgress);
-    }
+    };
 
     //Music progress Change Event handler
     const handleMusicProgressBar = (event) => {
@@ -77,12 +83,23 @@ export default function MusicApp({song}) {
         <div className="music-container">
             <audio src={song.songSource} ref={currentAudio} onTimeUpdate={handleAudioTimeUpdate}></audio>
             <img className="music-poster" src={song.songPoster} height="200px" width="280px" alt="Music Poster" />
-            <svg onClick={handleClick} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#EBEDF3" className="bi bi-music-note-list playlist-button" viewBox="0 0 16 16">
+            <svg onClick={displayPlaylist} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#EBEDF3" className="bi bi-music-note-list playlist-button" viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                 <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"/>
                 <path fill-rule="evenodd" d="M12 3v10h-1V3z"/>
                 <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1z"/>
                 <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"/>
             </svg>
+
+            <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel"><img className="app-logo" src="/images/logo.jpg" height="36px" width="36px" alt="App logo" title="MOOD, A Music App"/>  MUSIC (Playlist)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    {console.log(songList)}
+                    {songList.map((songDetail) => <MusicCard songDetail={{...songDetail}} />)}
+                </div>
+            </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br />
             <div className="music-details mb-4">
