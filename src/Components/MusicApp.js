@@ -5,23 +5,46 @@ export default function MusicApp({song}) {
     const currentAudio = useRef();
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
     const [audioProgress, setAudioProgress] = useState(0);
-    const [audioProgressDuration, setAudioProgressDuration] = useState("0:00");
+    const [audioTotalTime, setAudioTotalTime] = useState("4:23");
+    const [audioProgressTime, setAudioProgressTime] = useState("0:00");
     const [volume, setVolume] = useState(50);
+    const [isMuted, setIsMuted] = useState(false);
 
     const handleClick = () => {
         alert("hi");
     }
 
+    //Time convertion seconds to Miute:Seconds Format
+    const secondsToMinute = (time) => {
+        let timeMinutes = Math.floor(time/60);
+        let timeSeconds = Math.floor(time%60);
+        if (timeSeconds < 10) {
+            timeSeconds = "0" + timeSeconds;
+        }
+        return(timeMinutes+":"+timeSeconds);
+    }
+
+    //Audio time update Event Handler
+    const handleAudioTimeUpdate = () => {
+        //Sets Total time duartion of audio input
+        setAudioTotalTime(secondsToMinute(currentAudio.current.duration));
+
+        //Sets Progress time of audio input
+        setAudioProgressTime(secondsToMinute(currentAudio.current.currentTime));
+
+        //Sets Audio progress of audio input
+        let audioProgress = Math.floor((currentAudio.current.currentTime/currentAudio.current.duration) * 100);
+        
+        setAudioProgress(isNaN(audioProgress)? 0: audioProgress);
+    }
+
+    //Music progress Change Event handler
     const handleMusicProgressBar = (event) => {
         setAudioProgress(event.target.value);
         currentAudio.current.currentTime = (event.target.value * currentAudio.current.duration) / 100;
-        let currentMinutes = Math.floor(currentAudio.current.currentTime/60);
-        let currentSeconds = Math.floor(currentAudio.current.currentTime%60);
-        if (currentSeconds < 10) {currentSeconds="0"+currentSeconds;}
-        let currentProgressTime = currentMinutes+":"+currentSeconds;
-        setAudioProgressDuration(currentProgressTime);
-    }
+    };
 
+    //Audio play/pause Event handler
     const handleAudioPlay = () => {
         if(currentAudio.current.paused) {
             currentAudio.current.play();
@@ -30,11 +53,29 @@ export default function MusicApp({song}) {
             currentAudio.current.pause();
             setIsAudioPlaying(false);
         }
-    }
+    };
+
+    //Volume adjust Event handler
+    const handleVolumeChange = (event) => {
+        setVolume(event.target.value);
+        //Sets current audio volume
+        currentAudio.current.volume = volume/100;
+    };
+
+    //Volume mute handler - Function that handles music player's volume mute
+    const handleVolumeMute = () => {
+        if(!currentAudio.current.muted) {
+            setIsMuted(true);
+            currentAudio.current.muted = true;
+        } else {
+            setIsMuted(false);
+            currentAudio.current.muted = false;
+        }
+    };
 
     return(
         <div className="music-container">
-            <audio src={song.songSource} ref={currentAudio}></audio>
+            <audio src={song.songSource} ref={currentAudio} onTimeUpdate={handleAudioTimeUpdate}></audio>
             <img className="music-poster" src={song.songPoster} height="200px" width="280px" alt="Music Poster" />
             <svg onClick={handleClick} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#EBEDF3" className="bi bi-music-note-list playlist-button" viewBox="0 0 16 16">
                 <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"/>
@@ -53,8 +94,8 @@ export default function MusicApp({song}) {
             <div className="music-progress mb-2">
                 <input type="range" className="music-progress-bar" value={audioProgress} onChange={handleMusicProgressBar} style={{"background" : `linear-gradient(to right, #9ECDC1 ${audioProgress}%, #7A7C91 ${audioProgress}%)`}}/>
                 <div className="music-timer d-flex justify-content-between">
-                    <div className="music-current-time">{audioProgressDuration}</div>
-                    <div className="music-total-time">{song.songDuration}</div>
+                    <div className="music-current-time">{audioProgressTime}</div>
+                    <div className="music-total-time">{audioTotalTime}</div>
                 </div>
             </div>
 
@@ -73,10 +114,16 @@ export default function MusicApp({song}) {
                 </div>
 
                 <div className="my-auto volume-controller">
-                    <svg className="me-2 volume-icon" xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 0 640 512">
-                        <path fill="#fffffe" d="M533.6 32.5C598.5 85.2 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64l0 384c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352 64 352c-35.3 0-64-28.7-64-64l0-64c0-35.3 28.7-64 64-64l67.8 0L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"/>
-                    </svg>
-                    <input type="range" className="volume-adjust-bar my-auto" min="0" max="100" value={volume} onChange={(event)=>{setVolume(event.target.value)}}/>
+                    <button onClick={handleVolumeMute} style={{"background": "none", "border": "none"}}>
+                        {isMuted? 
+                        <svg className="me-2 volume-icon" xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 0 576 512">
+                            <path fill="#fffffe" d="M301.1 34.8C312.6 40 320 51.4 320 64l0 384c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352 64 352c-35.3 0-64-28.7-64-64l0-64c0-35.3 28.7-64 64-64l67.8 0L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3zM425 167l55 55 55-55c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-55 55 55 55c9.4 9.4 9.4 24.6 0 33.9s-24.6 9.4-33.9 0l-55-55-55 55c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l55-55-55-55c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0z"/>
+                        </svg>: 
+                        <svg className="me-2 volume-icon" xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 0 640 512">
+                            <path fill="#fffffe" d="M533.6 32.5C598.5 85.2 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64l0 384c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352 64 352c-35.3 0-64-28.7-64-64l0-64c0-35.3 28.7-64 64-64l67.8 0L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"/>
+                        </svg>}
+                    </button>
+                    <input type="range" className="volume-adjust-bar my-auto" min="0" max="100" value={volume} onChange={handleVolumeChange}/>
                     <div className="volume-level">{volume}</div>
                 </div>
             </div>
