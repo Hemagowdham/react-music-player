@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import MusicCard from './MusicCard';
 
-export default function MusicApp({song, songList}) {
+export default function MusicApp({songList}) {
 
     const currentAudio = useRef();
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -11,16 +11,9 @@ export default function MusicApp({song, songList}) {
     const [volume, setVolume] = useState(50);
     const [isMuted, setIsMuted] = useState(false);
 
-    const handleClick = () => {
-        alert("hi");
-    }
+    const [nowPlayingSong, setNowPlayingSong] = useState(songList[0]);
 
-    //Playlist Display Event Handler
-    const displayPlaylist = () => {
-        
-    };
-
-    //Time convertion seconds to Miute:Seconds Format
+    //Time convertion seconds to Minutes:Seconds Format
     const secondsToMinute = (time) => {
         let timeMinutes = Math.floor(time/60);
         let timeSeconds = Math.floor(time%60);
@@ -54,10 +47,56 @@ export default function MusicApp({song, songList}) {
     const handleAudioPlay = () => {
         if(currentAudio.current.paused) {
             currentAudio.current.play();
+            nowPlayingSong.songPlayingStatus = true;
             setIsAudioPlaying(true);
         } else {
             currentAudio.current.pause();
+            nowPlayingSong.songPlayingStatus = false;
             setIsAudioPlaying(false);
+        }
+    };
+
+    //Updates Now Playing Song by accessing Song List index
+    const updateNowPlayingSong = (index) => {
+        let songObject = songList[index];
+        currentAudio.current.src = songObject.songSource;
+        currentAudio.current.play();
+        songObject.songPlayingStatus = true;
+
+        setNowPlayingSong(songObject);
+        setIsAudioPlaying(true);
+    };
+
+    //Play Next Event handler
+    const handleNextSong = () => {
+        //Now Playing Song Index
+        let songIndex = nowPlayingSong.id - 1;
+        //Next Song Index
+        let newIndex = songIndex + 1;
+        //console.log("New Index", newIndex);
+        nowPlayingSong.songPlayingStatus = false;
+
+        //Plays next song, loops when reaches maximum(Song List length) index
+        if (newIndex < (songList.length-1)) {
+            updateNowPlayingSong(newIndex);
+        } else if (newIndex === (songList.length-1)) {
+            updateNowPlayingSong(0);
+        }
+    };
+
+    //Play Prev Event handler
+    const handlePreviousSong = () => {
+        //Now Playing Song Index
+        let songIndex = nowPlayingSong.id - 1;
+        //Prev Song Index
+        let newIndex = songIndex - 1;
+        nowPlayingSong.songPlayingStatus = false;
+
+        //Plays previous song, loops when reaches minimum(zero) index
+        if (newIndex >= 0) {
+            updateNowPlayingSong(newIndex);
+        } else {
+            updateNowPlayingSong((songList.length-1));
         }
     };
 
@@ -81,31 +120,31 @@ export default function MusicApp({song, songList}) {
 
     return(
         <div className="music-container">
-            <audio src={song.songSource} ref={currentAudio} onTimeUpdate={handleAudioTimeUpdate}></audio>
-            <img className="music-poster" src={song.songPoster} height="200px" width="280px" alt="Music Poster" />
-            <svg onClick={displayPlaylist} xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#EBEDF3" className="bi bi-music-note-list playlist-button" viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
+            <audio src={songList[0].songSource} ref={currentAudio} onTimeUpdate={handleAudioTimeUpdate}></audio>
+            <img className="music-poster" src={nowPlayingSong.songPoster} height="200px" width="280px" alt="Music Poster" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#EBEDF3" className="bi bi-music-note-list playlist-button" viewBox="0 0 16 16" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                 <path d="M12 13c0 1.105-1.12 2-2.5 2S7 14.105 7 13s1.12-2 2.5-2 2.5.895 2.5 2"/>
-                <path fill-rule="evenodd" d="M12 3v10h-1V3z"/>
+                <path fillRule="evenodd" d="M12 3v10h-1V3z"/>
                 <path d="M11 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 16 2.22V4l-5 1z"/>
-                <path fill-rule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"/>
+                <path fillRule="evenodd" d="M0 11.5a.5.5 0 0 1 .5-.5H4a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 7H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5m0-4A.5.5 0 0 1 .5 3H8a.5.5 0 0 1 0 1H.5a.5.5 0 0 1-.5-.5"/>
             </svg>
 
-            <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel"><img className="app-logo" src="/images/logo.jpg" height="36px" width="36px" alt="App logo" title="MOOD, A Music App"/>  MUSIC (Playlist)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div className="offcanvas-header">
+                    <h5 className="offcanvas-title" id="offcanvasScrollingLabel"><img className="app-logo" src="/images/logo.jpg" height="36px" width="36px" alt="App logo" title="MOOD, A Music App"/>  MUSIC (Playlist)</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                <div class="offcanvas-body">
-                    {console.log(songList)}
-                    {songList.map((songDetail) => <MusicCard songDetail={{...songDetail}} />)}
+                <div className="offcanvas-body">
+                    {console.log("songs list", songList)}
+                    {songList.map((songDetail) => <MusicCard key={songDetail.id} songDetail={{...songDetail}} />)}
                 </div>
             </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br />
             <div className="music-details mb-4">
-                <p className="music-title">{song.songName} (<span>{song.songAlbum}</span>)</p>
-                <p className="music-artist">Artists - {song.songArtist}</p>
-                <p className="music-composer">Composer - {song.songComposer}</p>
+                <p className="music-title">{nowPlayingSong.songName} (<span>{nowPlayingSong.songAlbum}</span>)</p>
+                <p className="music-artist">Artists - {nowPlayingSong.songArtist}</p>
+                <p className="music-composer">Composer - {nowPlayingSong.songComposer}</p>
             </div>
 
             <div className="music-progress mb-2">
@@ -118,19 +157,18 @@ export default function MusicApp({song, songList}) {
 
             <div className="music-controls">
                 <div className="music-controller d-flex justify-content-center">
-                    <svg className="my-auto mx-2 prev-icon" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" viewBox="0 0 320 512">
+                    <svg className="my-auto mx-2 prev-icon" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" viewBox="0 0 320 512" onClick={handlePreviousSong}>
                         <path fill="#ffffff" d="M267.5 440.6c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29l0-320c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4l-192 160L64 241 64 96c0-17.7-14.3-32-32-32S0 78.3 0 96L0 416c0 17.7 14.3 32 32 32s32-14.3 32-32l0-145 11.5 9.6 192 160z"/>
                     </svg>
 
-                    <img src={isAudioPlaying? "/images/pause-icon.png": "/images/play-icon.png"} height="60px" width="60px" alt="Pause icon" style={{"border-radius": "50%"}} onClick={handleAudioPlay}/>
-                    {/*<img src="/images/play-icon.png" height="60px" width="60px" alt="Play icon" style={{"border-radius": "50%"}}/>*/}
+                    <img src={isAudioPlaying? "/images/pause-icon.png": "/images/play-icon.png"} height="60px" width="60px" alt="Play/Pause icon" onClick={handleAudioPlay} style={{"borderRadius": "50%"}}/>
 
-                    <svg className="my-auto mx-2 next-icon" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" viewBox="0 0 320 512">
+                    <svg className="next-icon my-auto mx-2" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" viewBox="0 0 320 512" onClick={handleNextSong}>
                         <path fill="#fffffe" d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416L0 96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4l192 160L256 241l0-145c0-17.7 14.3-32 32-32s32 14.3 32 32l0 320c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-145-11.5 9.6-192 160z"/>
                     </svg>
                 </div>
 
-                <div className="my-auto volume-controller">
+                <div className="volume-controller my-auto">
                     <button onClick={handleVolumeMute} style={{"background": "none", "border": "none"}}>
                         {isMuted? 
                         <svg className="me-2 volume-icon" xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 0 576 512">

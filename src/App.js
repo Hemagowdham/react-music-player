@@ -12,7 +12,7 @@ function App() {
       songComposer:"Sai Abhyankkar",
       songPoster: "/images/images.jpeg", 
       songSource: "/songs/Katchi Sera.mp3", 
-      songDuration: "3:01"},
+      songPlayingStatus: false},
 
     { id: 2,
       songName: "Anbil Avan", 
@@ -21,7 +21,7 @@ function App() {
       songComposer: "A.R. Rahman",
       songPoster: "/images/hosonnaposter.jpg",
       songSource: "/songs/Anbil-Avan.mp3", 
-      songDuration: "4:12"},
+      songPlayingStatus: false},
 
     { id: 3,
       songName: "Millionaire", 
@@ -30,7 +30,7 @@ function App() {
       songComposer:"Yo Yo Honey Singh",
       songPoster: "/images/Millionaire.png", 
       songSource: "/songs/Millionaire.mp3", 
-      songDuration: "3:19"},
+      songPlayingStatus: false},
 
     { id: 4,
       songName: "Chuttamalle", 
@@ -39,7 +39,7 @@ function App() {
       songComposer:"Anirudh Ravichander",
       songPoster: "/images/Chuttamalle.jpeg", 
       songSource: "/songs/Chuttamalle.mp3", 
-      songDuration: "3:44"},
+      songPlayingStatus: false},
 
     { id: 5,
       songName: "Hunter Vantaar", 
@@ -48,7 +48,7 @@ function App() {
       songComposer:"Anirudh Ravichander",
       songPoster: "/images/hunter.jpeg", 
       songSource: "/songs/Hunter Vantaar.mp3", 
-      songDuration: "3:12"},
+      songPlayingStatus: false},
 
     { id: 6,
       songName: "Apna Bana Le", 
@@ -57,7 +57,7 @@ function App() {
       songComposer:"Sachin-Jigar",
       songPoster: "/images/apna bana le.jpg", 
       songSource: "/songs/Apna Bana le.mp3", 
-      songDuration: "3:12"},
+      songPlayingStatus: false},
 
     { id: 7,
       songName: "Apna Bana Le", 
@@ -66,7 +66,7 @@ function App() {
       songComposer:"Sachin-Jigar",
       songPoster: "/images/apna bana le.jpg", 
       songSource: "/songs/Apna Bana le.mp3", 
-      songDuration: "3:12"},
+      songPlayingStatus: false},
 
     { id: 8,
       songName: "Apna Bana Le", 
@@ -75,13 +75,12 @@ function App() {
       songComposer:"Sachin-Jigar",
       songPoster: "/images/apna bana le.jpg", 
       songSource: "/songs/Apna Bana le.mp3", 
-      songDuration: "3:12"},
+      songPlayingStatus: false},
   ];
-  const song = songList[0];
   
   return (
     <div className="App" id="main">
-      <MusicApp song={song} songList={songList}/>
+      <MusicApp songList={songList}/>
     </div>
   );
 }
