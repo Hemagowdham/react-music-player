@@ -77,9 +77,9 @@ export default function MusicApp({songList}) {
         nowPlayingSong.songPlayingStatus = false;
 
         //Plays next song, loops when reaches maximum(Song List length) index
-        if (newIndex < (songList.length-1)) {
+        if (newIndex <= (songList.length-1)) {
             updateNowPlayingSong(newIndex);
-        } else if (newIndex === (songList.length-1)) {
+        } else {
             updateNowPlayingSong(0);
         }
     };
@@ -149,26 +149,26 @@ export default function MusicApp({songList}) {
 
             <div className="music-progress mb-2">
                 <input type="range" className="music-progress-bar" value={audioProgress} onChange={handleMusicProgressBar} style={{"background" : `linear-gradient(to right, #9ECDC1 ${audioProgress}%, #7A7C91 ${audioProgress}%)`}}/>
-                <div className="music-timer d-flex justify-content-between">
+                <div className="music-timer d-flex justify-content-between mt-1">
                     <div className="music-current-time">{audioProgressTime}</div>
                     <div className="music-total-time">{audioTotalTime}</div>
                 </div>
             </div>
 
-            <div className="music-controls">
+            <div className='music-controls'>
                 <div className="music-controller d-flex justify-content-center">
-                    <svg className="my-auto mx-2 prev-icon" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" viewBox="0 0 320 512" onClick={handlePreviousSong}>
+                    <svg className="my-auto mx-2 prev-icon" xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 320 512" onClick={handlePreviousSong}>
                         <path fill="#ffffff" d="M267.5 440.6c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29l0-320c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4l-192 160L64 241 64 96c0-17.7-14.3-32-32-32S0 78.3 0 96L0 416c0 17.7 14.3 32 32 32s32-14.3 32-32l0-145 11.5 9.6 192 160z"/>
                     </svg>
 
-                    <img src={isAudioPlaying? "/images/pause-icon.png": "/images/play-icon.png"} height="60px" width="60px" alt="Play/Pause icon" onClick={handleAudioPlay} style={{"borderRadius": "50%"}}/>
+                    <img src={isAudioPlaying? "/images/pause-icon.png": "/images/play-icon.png"} height="64px" width="64px" alt="Play/Pause icon" onClick={handleAudioPlay} style={{"borderRadius": "50%"}}/>
 
-                    <svg className="next-icon my-auto mx-2" xmlns="http://www.w3.org/2000/svg" height="32px" width="32px" viewBox="0 0 320 512" onClick={handleNextSong}>
+                    <svg className="next-icon my-auto mx-2" xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" viewBox="0 0 320 512" onClick={handleNextSong}>
                         <path fill="#fffffe" d="M52.5 440.6c-9.5 7.9-22.8 9.7-34.1 4.4S0 428.4 0 416L0 96C0 83.6 7.2 72.3 18.4 67s24.5-3.6 34.1 4.4l192 160L256 241l0-145c0-17.7 14.3-32 32-32s32 14.3 32 32l0 320c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-145-11.5 9.6-192 160z"/>
                     </svg>
                 </div>
 
-                <div className="volume-controller my-auto">
+                <div className="volume-controller">
                     <button onClick={handleVolumeMute} style={{"background": "none", "border": "none"}}>
                         {isMuted? 
                         <svg className="me-2 volume-icon" xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 0 576 512">
@@ -179,9 +179,12 @@ export default function MusicApp({songList}) {
                         </svg>}
                     </button>
                     <input type="range" className="volume-adjust-bar my-auto" min="0" max="100" value={volume} onChange={handleVolumeChange}/>
-                    <div className="volume-level">{volume}</div>
+                    <div className="volume-level my-auto ps-2">{volume}</div>
                 </div>
             </div>
+            <br />
+            <br />
+            <br />
             <br />
         </div>
     );

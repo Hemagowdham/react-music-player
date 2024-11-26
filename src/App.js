@@ -4,7 +4,7 @@ import MusicApp from './Components/MusicApp';
 
 function App() {
 
-  const songList = [
+  const musicAPI = [
     { id: 1,
       songName: "Katchi sera", 
       songAlbum: "Think Indie",
@@ -51,36 +51,36 @@ function App() {
       songPlayingStatus: false},
 
     { id: 6,
-      songName: "Apna Bana Le", 
-      songAlbum: "Bhediya",
-      songArtist: "Sachin-Jigar, Arijit Singh", 
-      songComposer:"Sachin-Jigar",
-      songPoster: "/images/apna bana le.jpg", 
-      songSource: "/songs/Apna Bana le.mp3", 
+      songName: "Sirikkadhey", 
+      songAlbum: "Remo",
+      songArtist: "Anirudh Ravichander, Arjun Kanungo, Srinidhi Venkatesh", 
+      songComposer:"Anirudh Ravichander",
+      songPoster: "/images/sirikadhey.jpeg", 
+      songSource: "/songs/sirikkadhey.mp3", 
       songPlayingStatus: false},
 
     { id: 7,
-      songName: "Apna Bana Le", 
-      songAlbum: "Bhediya",
-      songArtist: "Sachin-Jigar, Arijit Singh", 
-      songComposer:"Sachin-Jigar",
-      songPoster: "/images/apna bana le.jpg", 
-      songSource: "/songs/Apna Bana le.mp3", 
+      songName: "Adada", 
+      songAlbum: "Raja Rani",
+      songArtist: "G. V. Prakash Kumar", 
+      songComposer:"G. V. Prakash Kumar",
+      songPoster: "/images/adada.jpeg", 
+      songSource: "/songs/adada.mp3", 
       songPlayingStatus: false},
 
     { id: 8,
-      songName: "Apna Bana Le", 
-      songAlbum: "Bhediya",
-      songArtist: "Sachin-Jigar, Arijit Singh", 
-      songComposer:"Sachin-Jigar",
-      songPoster: "/images/apna bana le.jpg", 
-      songSource: "/songs/Apna Bana le.mp3", 
+      songName: "Naadaniyan", 
+      songAlbum: "Compositions Of Melody",
+      songArtist: "Jiojimi, Naziya K.", 
+      songComposer:"Akshath",
+      songPoster: "/images/Naadaniyan.jpeg", 
+      songSource: "/songs/Nadaaniyan.mp3", 
       songPlayingStatus: false},
   ];
   
   return (
     <div className="App" id="main">
-      <MusicApp songList={songList}/>
+      <MusicApp songList={musicAPI}/>
     </div>
   );
 }
