@@ -38,6 +38,31 @@ Bootstrap - CSS Framework
 
 ### `npm start`
 
-## Project Screenshots
+## 📂 Project Structure
 
-![image](https://github.com/user-attachments/assets/7f1da93e-93b4-44e1-94bf-0dcd341f4ac7)
+![image](https://github.com/user-attachments/assets/b9fa707b-4733-45d4-adaa-9d46ea55f193)
+
+## 🎬 Live Demo
+
+youtube link... (yet to paste)
+
+## 📸 Project Screenshots
+
+![image](https://github.com/user-attachments/assets/2eded8fe-98bd-4fa2-ae57-2c1f44fd522b)
+
+![image](https://github.com/user-attachments/assets/2d66d1c0-ef0d-44a3-848c-cee2b9e8501c)
+
+![image](https://github.com/user-attachments/assets/986f9bff-37e9-4c66-9233-bfcd897b076d)
+
+![image](https://github.com/user-attachments/assets/199f5856-69d4-42f2-822b-dd9c27eac3f3)
+
+![image](https://github.com/user-attachments/assets/c3ee5a25-827d-46c7-a428-bda08f9a5a05)
+
+![image](https://github.com/user-attachments/assets/43c0aaa5-fc57-43b5-892e-88da01a89e65)
+
+
+
+
+
+
+
