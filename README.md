@@ -1,6 +1,6 @@
 ## 🎵 MOOD - Music Player using React
 
-MOOD Music player is a Web-based Responsive music player, featuring audio playback, modern user interface, play/pause/seek controls, volume controls and playlist view. 
+MOOD Music player is a Web-based Responsive music player, featuring audio playback, modern user interface, play/pause/seek controls, volume controls, previous & next track features and playlist view. 
 
 ## 🛠 Features
 
@@ -11,6 +11,8 @@ MOOD Music player is a Web-based Responsive music player, featuring audio playba
 ▶️ Play, Pause, and Seek Control
 
 🔊 Volume Control
+
+⏮️ Previous & Next Track Features
 
 🎧 Song Information
 
